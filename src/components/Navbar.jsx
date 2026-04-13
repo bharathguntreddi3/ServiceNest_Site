@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
+import { FaShoppingCart, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, login } from "../redux/authSlice";
 import { clearCart, removeFromCart, setCart } from "../redux/cartSlice";
@@ -45,6 +45,7 @@ export default function Navbar() {
   const [resendTimer, setResendTimer] = useState(0);
   const [isResending, setIsResending] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!showPromoBanner) return;
@@ -425,9 +426,11 @@ export default function Navbar() {
               <img
                 src={logo}
                 alt="logo"
+              className="nav-logo-img"
                 style={{ height: "140px", width: "140px", margin: "-30px 0" }}
               />
               <span
+              className="nav-logo-text"
                 style={{
                   fontSize: "26px",
                   fontWeight: "800",
@@ -440,10 +443,11 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="nav-links">
-            <Link to="/">Home</Link>
-            <a href="/#services">Services</a>
-            <a href="/#categories">Categories</a>
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+          <a href="/#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
+          <a href="/#categories" onClick={() => setIsMobileMenuOpen(false)}>Categories</a>
           </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           <div className="nav-actions">
             {user ? (
               <>
@@ -626,7 +630,50 @@ export default function Navbar() {
               <span className="cart-badge">{cartItems.length}</span>
             </a>
           </div>
+          <button 
+            className="mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
         </div>
+      </div>
+      <style>{`
+        .mobile-menu-toggle {
+          display: none;
+          background: none;
+          border: none;
+          color: white;
+          font-size: 24px;
+          cursor: pointer;
+          padding: 0;
+        }
+        @media (max-width: 768px) {
+          .navbar-inner {
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: space-between !important;
+          }
+          .mobile-menu-toggle {
+            display: block;
+          }
+          .nav-links {
+            display: ${isMobileMenuOpen ? "flex" : "none"} !important;
+            width: 100%;
+            flex-direction: column;
+            background: rgba(11, 60, 112, 0.95);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            order: 3;
+          }
+          .nav-actions {
+            width: auto !important;
+            flex-wrap: nowrap !important;
+            gap: 15px !important;
+          }
+        }
+      `}</style>
       </nav>
 
       {showHelpModal && (
@@ -1103,6 +1150,7 @@ export default function Navbar() {
     </>
   );
 }
+
 
 const dropdownItemStyle = {
   padding: "10px 20px",
