@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../Utils/AxiosInstance";
 import toast from "react-hot-toast";
 
 // In-case if the fetching from database fails then these data will be displayed on front
@@ -55,9 +55,7 @@ export default function PopularServices() {
   useEffect(() => {
     const fetchPopularServices = async () => {
       try {
-        const response = await axios.get(
-          "/api/popular-services",
-        );
+        const response = await axiosInstance.get("/api/popular-services");
         if (Array.isArray(response.data) && response.data.length > 0) {
           setServices(response.data);
         }
@@ -95,13 +93,13 @@ export default function PopularServices() {
       const token = localStorage.getItem("token");
       let response;
       if (action === "increment") {
-        response = await axios.post(
+        response = await axiosInstance.post(
           "/api/cart/add",
           { userId: user.id, service: serviceObj },
           { headers: { Authorization: `Bearer ${token}` } },
         );
       } else if (action === "decrement") {
-        response = await axios.put(
+        response = await axiosInstance.put(
           "/api/cart/decrement",
           { userId: user.id, serviceId: serviceId },
           { headers: { Authorization: `Bearer ${token}` } },
