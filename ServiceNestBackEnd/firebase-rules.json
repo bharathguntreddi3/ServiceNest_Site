@@ -1,0 +1,59 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      ".indexOn": ["email", "phone", "role"],
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/role').val() === 'admin')",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/role').val() === 'admin')"
+      }
+    },
+
+    "cart_items": {
+      ".indexOn": ["user_id", "user_id_service_id"],
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+
+    "bookings": {
+      ".indexOn": ["user_id", "booking_date"],
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+
+    "reviews": {
+      ".indexOn": ["user_id", "created_at"],
+      ".read": true,
+      ".write": "auth != null"
+    },
+
+    "categories": {
+      ".read": true,
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    },
+
+    "services": {
+      ".indexOn": ["is_active", "category_id"],
+      ".read": true,
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    },
+
+    "popular_services": {
+      ".read": true,
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    },
+
+    "settings": {
+      ".read": true,
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    },
+
+    "coupons": {
+      ".indexOn": ["code", "is_active", "created_at"],
+      ".read": true,
+      ".write": "auth != null && root.child('users/' + auth.uid + '/role').val() === 'admin'"
+    }
+  }
+}
