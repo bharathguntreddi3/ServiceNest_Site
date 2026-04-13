@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
-import axios from "axios";
-import {FiSearch, FiX} from "react-icons/fi";
+import axiosInstance from "../Utils/AxiosInstance";
+import { FiSearch, FiX } from "react-icons/fi";
 
 // After search this page pops up
 
@@ -36,7 +36,9 @@ export default function Home() {
   const [search, setSearch] = useState(searchParams.get("search") || "");
 
   // for heavy filtering, we can debounce the search input to avoid too many renders
-  const [debouncedSearch, setDebouncedSearch] = useState(searchParams.get("search") || "");
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    searchParams.get("search") || "",
+  );
 
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,11 +48,11 @@ export default function Home() {
     const fetchServices = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("/api/services");
-        setServices(response.data);
+        const response = await axiosInstance.get("/api/categories");
+        setServices(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Error fetching services:", error);
-      }finally{
+      } finally {
         setIsLoading(false);
       }
     };
@@ -58,13 +60,13 @@ export default function Home() {
   }, []);
 
   // debounce logic and url sync
-  useEffect(()=>{
-    const timer = setTimeout(()=>{
+  useEffect(() => {
+    const timer = setTimeout(() => {
       setDebouncedSearch(search);
-      // update url without reloading the page 
-      if(search){
-        setSearchParams({search});
-      }else{
+      // update url without reloading the page
+      if (search) {
+        setSearchParams({ search });
+      } else {
         setSearchParams({});
       }
     }, 300);
@@ -72,25 +74,35 @@ export default function Home() {
   }, [search, setSearchParams]);
 
   // multi - word filter by useMemo
-  const filtered = useMemo(()=>{
-    if(!debouncedSearch) return services;
+  const filtered = useMemo(() => {
+    if (!debouncedSearch) return services;
     // split the search term into individual words and remove extra spaces
-    const searchTerms = debouncedSearch.toLowerCase().split(" ").filter(Boolean);
+    const searchTerms = debouncedSearch
+      .toLowerCase()
+      .split(" ")
+      .filter(Boolean);
 
-    return services.filter((cat)=>{
-      const categoryName = cat.category.toLowerCase();
+    return (Array.isArray(services) ? services : []).filter((cat) => {
+      const categoryName = (
+        cat.category ||
+        cat.name ||
+        cat.title ||
+        ""
+      ).toLowerCase();
       // check for the matching category
-      const matchCategroy = searchTerms.every(term=>categoryName.includes(term));
+      const matchCategroy = searchTerms.every((term) =>
+        categoryName.includes(term),
+      );
       // check for the matching items
-      const matchItems = cat.items?.some((item)=>{
+      const matchItems = cat.items?.some((item) => {
         const itemName = (item.name || item.title || "").toLowerCase();
-        return searchTerms.every(term=>itemName.includes(term));
+        return searchTerms.every((term) => itemName.includes(term));
       });
-      return matchCategroy  || matchItems;
+      return matchCategroy || matchItems;
     });
   }, [services, debouncedSearch]);
 
-  // 
+  //
   // const filtered = services.filter((cat) => {
   //   const matchCategory = cat.category
   //     .toLowerCase()
@@ -135,7 +147,7 @@ export default function Home() {
             padding: "5px 15px",
             backgroundColor: "#fff",
             borderRadius: "50px",
-            border: "1px solid #e0e0e0"
+            border: "1px solid #e0e0e0",
           }}
         >
           <FiSearch size={20} color="orange" style={{ marginRight: "10px" }} />
@@ -145,14 +157,14 @@ export default function Home() {
               border: "none",
               outline: "none",
               padding: "12px 0",
-              fontSize: "16px"
+              fontSize: "16px",
             }}
             placeholder="Search for cleaning, plumbing, etc..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           {search && (
-            <button 
+            <button
               onClick={() => setSearch("")}
               style={{
                 background: "transparent",
@@ -161,7 +173,7 @@ export default function Home() {
                 padding: "5px",
                 display: "flex",
                 alignItems: "center",
-                color: "black"
+                color: "black",
               }}
               aria-label="Clear search"
             >
@@ -173,8 +185,8 @@ export default function Home() {
 
       {isLoading ? (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
-           {/* Add a simple loading spinner or skeleton here if desired */}
-            <p>Loading services...</p>
+          {/* Add a simple loading spinner or skeleton here if desired */}
+          <p>Loading services...</p>
         </div>
       ) : (
         <div className="grid">
@@ -195,7 +207,10 @@ export default function Home() {
                     borderRadius: "12px 12px 0 0",
                   }}
                 >
-                  <ImageWithSkeleton src={cat.image} alt={cat.category} />
+                  <ImageWithSkeleton
+                    src={cat.image || cat.image_url}
+                    alt={cat.category || cat.name}
+                  />
                 </div>
 
                 <div
@@ -214,7 +229,7 @@ export default function Home() {
                       fontSize: "22px",
                     }}
                   >
-                    {cat.category}
+                    {cat.category || cat.name}
                   </h3>
 
                   <Link
@@ -227,7 +242,7 @@ export default function Home() {
                         padding: "12px",
                         fontSize: "16px",
                         fontWeight: "600",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                     >
                       View Services
@@ -239,12 +254,20 @@ export default function Home() {
           ) : (
             <div
               className="empty-cart"
-              style={{ gridColumn: "1 / -1", marginTop: "20px", textAlign: "center" }}
+              style={{
+                gridColumn: "1 / -1",
+                marginTop: "20px",
+                textAlign: "center",
+              }}
             >
               <h3>No Services Found</h3>
               <p>We couldn't find any services matching "{search}".</p>
-              <button 
-                style={{ padding: "10px 20px", cursor: "pointer", marginTop: "10px" }} 
+              <button
+                style={{
+                  padding: "10px 20px",
+                  cursor: "pointer",
+                  marginTop: "10px",
+                }}
                 onClick={() => setSearch("")}
               >
                 Clear Search
