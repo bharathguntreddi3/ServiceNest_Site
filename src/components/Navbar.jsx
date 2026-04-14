@@ -658,8 +658,9 @@ export default function Navbar() {
           .nav-logo-img {
             height: 75px;
             width: 75px;
-            margin: 0; /* Let flex gap on .brand-link handle spacing */
-            transform: scale(1.8); /* Reduced for better balance */
+            margin: 0;
+            margin: 0 40px 0 0;
+            transform: scale(2.0); /* Reduced for better balance */
             transform-origin: left center; /* Ensures scaling doesn't shift left */
             object-fit: contain;
           }
@@ -711,7 +712,7 @@ export default function Navbar() {
             }
             
             .mobile-floating-cart:active {
-              transform: scale(0.92) !important;
+              transform: scale(0.8) !important;
             }
 
             .mobile-floating-cart svg {
@@ -739,7 +740,7 @@ export default function Navbar() {
               height: 60px !important;
               width: 60px !important;
               margin: 0 !important;
-              transform: scale(1.6) !important;
+              transform: scale(2.0) !important;
               transform-origin: left center !important;
             }
 
@@ -818,7 +819,7 @@ export default function Navbar() {
               height: 50px !important;
               width: 50px !important;
               margin: 0 !important;
-              transform: scale(1.5) !important;
+              transform: scale(1.8) !important;
               transform-origin: left center !important;
             }
             .nav-logo-text {
