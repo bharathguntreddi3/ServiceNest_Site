@@ -1486,7 +1486,7 @@ font-size: 18px;
     width: 100%;
     background: white;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
-    padding: 15px 20px;
+    padding: 15px 20px max(15px, env(safe-area-inset-bottom)) 20px;
     z-index: 2000;
     justify-content: space-between;
     align-items: center;
@@ -1589,6 +1589,7 @@ font-size: 18px;
 
 .cart-drawer-footer {
   padding: 20px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
   border-top: 1px solid #eee;
   background-color: #fdfdfd;
 }

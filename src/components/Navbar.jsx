@@ -416,7 +416,7 @@ export default function Navbar() {
           <div className="logo">
             <Link to="/" className="brand-link">
               <img src={logo} alt="logo" className="nav-logo-img" />
-              <span className="logo-name hidden md:block"><span className="s-logo">S</span>ervice<span className="n-logo">N</span>est</span>
+              <span className="logo-name"><span className="s-logo">S</span>ervice<span className="n-logo">N</span>est</span>
             </Link>
           </div>
 
@@ -610,6 +610,21 @@ export default function Navbar() {
 
         {/* 4. UNIFIED STYLES - Handles both desktop and mobile sizings safely */}
         <style>{`
+          .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 60, 112, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+            
+            // env(safe-area-inset-top) safely ignores the notification pane and nav pane in mobile screens
+            padding: max(10px, env(safe-area-inset-top)) 0 10px 0; 
+            
+            transition: all 0.3s ease;
+          }
 
           .s-logo {
             color: #ff7a00;
@@ -618,6 +633,14 @@ export default function Navbar() {
           .n-logo {
             color: #ff7a00;
             font-weight: bold;
+          }
+
+          .desktop-cart-icon {
+            display: flex;
+          }
+
+          .mobile-floating-cart {
+            display: none;
           }
           .navbar-inner {
             display: flex;
@@ -635,10 +658,9 @@ export default function Navbar() {
           .nav-logo-img {
             height: 75px;
             width: 75px;
-            margin: 0;
-            margin: 0 35px 0 0;
-            transform: scale(2.0);
-            transform-origin: left center; /* <-- FIX: Prevents left-side cutoff */
+            margin: 0; /* Let flex gap on .brand-link handle spacing */
+            transform: scale(1.8); /* Reduced for better balance */
+            transform-origin: left center; /* Ensures scaling doesn't shift left */
             object-fit: contain;
           }
 
@@ -647,7 +669,6 @@ export default function Navbar() {
             font-weight: 300;
             color: white;
             letter-spacing: 1px;
-            font-family: 'Nunito', sans-serif;
           }
 
           .nav-right, .nav-actions {
@@ -715,11 +736,11 @@ export default function Navbar() {
             }
 
             .nav-logo-img {
-              height: 65px !important;  
-              width: 65px !important;
+              height: 60px !important;
+              width: 60px !important;
               margin: 0 !important;
-              transform: scale(2.0) !important; 
-              transform-origin: left center !important; /* <-- FIX FOR MOBILE */
+              transform: scale(1.6) !important;
+              transform-origin: left center !important;
             }
 
             .nav-logo-text {
@@ -727,7 +748,7 @@ export default function Navbar() {
             }
 
             .brand-link {
-              gap: 10px !important;
+              gap: 5px !important; /* Adjusted gap for smaller logo */
             }
 
             .mobile-menu-toggle {
@@ -794,11 +815,11 @@ export default function Navbar() {
 
           @media (max-width: 400px) {
             .nav-logo-img {
-              height: 55px !important;
-              width: 55px !important;
+              height: 50px !important;
+              width: 50px !important;
               margin: 0 !important;
-              transform: scale(1.8) !important;
-              transform-origin: left center !important; /* <-- FIX FOR SMALL PHONES */
+              transform: scale(1.5) !important;
+              transform-origin: left center !important;
             }
             .nav-logo-text {
               font-size: 18px !important;
