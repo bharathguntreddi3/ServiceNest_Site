@@ -416,7 +416,7 @@ export default function Navbar() {
           <div className="logo">
             <Link to="/" className="brand-link">
               <img src={logo} alt="logo" className="nav-logo-img" />
-              <span className="logo-name hidden md:block">ServiceNest</span>
+              <span className="logo-name hidden md:block"><span className="s-logo">S</span>ervice<span className="n-logo">N</span>est</span>
             </Link>
           </div>
 
@@ -590,7 +590,7 @@ export default function Navbar() {
                 </Link>
               )}
               <a
-                className="cart-icon"
+                className="cart-icon desktop-cart-icon"
                 onClick={() => setIsCartOpen(true)}
                 style={{ cursor: "pointer" }}
               >
@@ -610,6 +610,15 @@ export default function Navbar() {
 
         {/* 4. UNIFIED STYLES - Handles both desktop and mobile sizings safely */}
         <style>{`
+
+          .s-logo {
+            color: #ff7a00;
+            font-weight: bold;
+          }
+          .n-logo {
+            color: #ff7a00;
+            font-weight: bold;
+          }
           .navbar-inner {
             display: flex;
             align-items: center;
@@ -623,20 +632,22 @@ export default function Navbar() {
             text-decoration: none;
           }
 
-          /* Move Desktop inline styles here */
           .nav-logo-img {
             height: 75px;
             width: 75px;
             margin: 0;
-            transform: scale(1.5);
+            margin: 0 35px 0 0;
+            transform: scale(2.0);
+            transform-origin: left center; /* <-- FIX: Prevents left-side cutoff */
             object-fit: contain;
           }
 
-          .nav-logo-text {
-            font-size: 26px;
-            font-weight: 800;
+          .logo-name {
+            font-size: 25px;
+            font-weight: 300;
             color: white;
             letter-spacing: 1px;
+            font-family: 'Nunito', sans-serif;
           }
 
           .nav-right, .nav-actions {
@@ -657,6 +668,45 @@ export default function Navbar() {
 
           /* Mobile adjustments */
           @media (max-width: 768px) {
+            .desktop-cart-icon {
+              display: none !important;
+            }
+
+            .mobile-floating-cart {
+              display: flex !important;
+              position: fixed;
+              bottom: 30px;
+              right: 25px;
+              width: 60px;
+              height: 60px;
+              background-color: #ff7a00;
+              border-radius: 50%;
+              box-shadow: 0 6px 20px rgba(255, 122, 0, 0.4);
+              z-index: 2000;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              transition: transform 0.2s ease;
+            }
+            
+            .mobile-floating-cart:active {
+              transform: scale(0.92) !important;
+            }
+
+            .mobile-floating-cart svg {
+              font-size: 26px;
+            }
+
+            .mobile-floating-cart .cart-badge {
+              position: absolute;
+              top: 0;
+              right: 0;
+              background-color: #1e6bb8;
+              border: 2px solid white;
+              font-size: 13px;
+              padding: 3px 7px;
+            }
+
             .navbar-inner {
               flex-direction: row !important;
               justify-content: space-between !important;
@@ -664,12 +714,12 @@ export default function Navbar() {
               flex-wrap: wrap !important;
             }
 
-            /* Now the CSS can successfully shrink the logo! */
             .nav-logo-img {
-              height: 65px !important;  /* Increased from 55px */
-              width: 65px !important;   /* Increased from 55px */
+              height: 65px !important;  
+              width: 65px !important;
               margin: 0 !important;
-              transform: scale(2.0) !important; /* Increased scale from 1.4 */
+              transform: scale(2.0) !important; 
+              transform-origin: left center !important; /* <-- FIX FOR MOBILE */
             }
 
             .nav-logo-text {
@@ -687,7 +737,7 @@ export default function Navbar() {
             }
 
             .nav-links {
-              width: 100%  ;
+              width: 100%;
               position: absolute;
               top: 100%;
               left: 0;
@@ -744,10 +794,11 @@ export default function Navbar() {
 
           @media (max-width: 400px) {
             .nav-logo-img {
-              height: 55px !important; /* Increased from 45px */
-              width: 55px !important;  /* Increased from 45px */
+              height: 55px !important;
+              width: 55px !important;
               margin: 0 !important;
-              transform: scale(1.8) !important; /* Increased scale from 1.3 */
+              transform: scale(1.8) !important;
+              transform-origin: left center !important; /* <-- FIX FOR SMALL PHONES */
             }
             .nav-logo-text {
               font-size: 18px !important;
@@ -758,6 +809,16 @@ export default function Navbar() {
           }
         `}</style>
       </nav>
+
+      {/* Mobile Floating Cart */}
+      <a
+        className="mobile-floating-cart"
+        onClick={() => setIsCartOpen(true)}
+        style={{ cursor: "pointer" }}
+      >
+        <FaShoppingCart />
+        <span className="cart-badge">{cartItems.length}</span>
+      </a>
 
       {showHelpModal && (
         <div style={modalOverlayStyle} onClick={() => setShowHelpModal(false)}>
