@@ -666,10 +666,10 @@ export default function Navbar() {
 
             /* Now the CSS can successfully shrink the logo! */
             .nav-logo-img {
-              height: 55px !important;  
-              width: 55px !important;
+              height: 65px !important;  /* Increased from 55px */
+              width: 65px !important;   /* Increased from 55px */
               margin: 0 !important;
-              transform: scale(1.4) !important;
+              transform: scale(1.8) !important; /* Increased scale from 1.4 */
             }
 
             .nav-logo-text {
@@ -744,10 +744,10 @@ export default function Navbar() {
 
           @media (max-width: 400px) {
             .nav-logo-img {
-              height: 45px !important;
-              width: 45px !important;
+              height: 55px !important; /* Increased from 45px */
+              width: 55px !important;  /* Increased from 45px */
               margin: 0 !important;
-              transform: scale(1.3) !important;
+              transform: scale(1.5) !important; /* Increased scale from 1.3 */
             }
             .nav-logo-text {
               font-size: 18px !important;
