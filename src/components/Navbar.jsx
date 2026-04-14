@@ -759,27 +759,27 @@ export default function Navbar() {
             }
 
             .nav-links {
-              width: 100%;
+              width: 200px;
               position: absolute;
-              top: 100%;
-              left: 0;
+              top: calc(100% + 15px);
+              right: 15px;
+              left: auto;
               background: rgba(11, 60, 112, 0.98);
               flex-direction: column !important;
-              padding: 0;
+              padding: 10px 0;
               margin: 0;
               gap: 0 !important;
               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-              border-top: 1px solid rgba(255, 255, 255, 0.1);
+              border: 1px solid rgba(255, 255, 255, 0.1);
               
               /* Smooth dropdown animation */
               opacity: 0;
               visibility: hidden;
-              transform: translateY(-15px);
+              transform: translateY(-10px);
               transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               z-index: 999;
-              border-bottom-left-radius: 16px;
-              border-bottom-right-radius: 16px;
-              text-align: center;
+              border-radius: 12px;
+              text-align: left;
             }
 
             .nav-links.mobile-active {
@@ -789,21 +789,19 @@ export default function Navbar() {
             }
             
             .nav-links a {
-              padding: 18px 20px;
+              padding: 12px 20px;
               margin: 0 !important;
               width: 100%;
+              box-sizing: border-box;
               display: block;
-              border-bottom: 1px solid rgba(255, 255, 255, 0.05);
               transition: background 0.3s;
+              text-align: left;
             }
             
             .nav-links a:hover {
               background: rgba(255, 255, 255, 0.05);
             }
             
-            .nav-links a:last-child {
-              border-bottom: none;
-            }
             
             .nav-links a::after {
               display: none; /* Hide hover underline effect on mobile */

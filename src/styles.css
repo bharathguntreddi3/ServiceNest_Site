@@ -6,16 +6,24 @@
   --bg:#f5f7fb;
 }
 
+/* stops padding/borders from making elements wider than 100% */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* remove horizontal scroll*/
+  width: 100%;
 }
 
 body{
-  font-family:Arial;
-  margin:0;
-  background:var(--bg);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  overflow-x: hidden; /* remove horizontal scroll on body also */
+  width: 100%;
 }
-
 button{
   background:var(--secondary);
   color:white;
