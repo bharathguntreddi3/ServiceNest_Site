@@ -669,7 +669,7 @@ export default function Navbar() {
               height: 65px !important;  /* Increased from 55px */
               width: 65px !important;   /* Increased from 55px */
               margin: 0 !important;
-              transform: scale(1.8) !important; /* Increased scale from 1.4 */
+              transform: scale(2.0) !important; /* Increased scale from 1.4 */
             }
 
             .nav-logo-text {
@@ -747,7 +747,7 @@ export default function Navbar() {
               height: 55px !important; /* Increased from 45px */
               width: 55px !important;  /* Increased from 45px */
               margin: 0 !important;
-              transform: scale(1.5) !important; /* Increased scale from 1.3 */
+              transform: scale(1.8) !important; /* Increased scale from 1.3 */
             }
             .nav-logo-text {
               font-size: 18px !important;
