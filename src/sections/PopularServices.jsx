@@ -162,10 +162,9 @@ export default function PopularServices() {
                 <div className="service-info">
                   <h3>{service.name}</h3>
                   <p className="price">
-                    ₹
-                    {typeof service.price === "number"
-                      ? `₹${service.price}`
-                      : service.price}
+                    {String(service.price).startsWith("₹")
+                      ? service.price
+                      : `₹${service.price}`}
                   </p>
                   {quantity > 0 ? (
                     <div

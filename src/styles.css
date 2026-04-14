@@ -13,7 +13,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* remove horizontal scroll*/
+  overflow-x: clip; /* remove horizontal scroll without breaking sticky navbar */
   width: 100%;
 }
 
@@ -21,7 +21,7 @@ body{
   font-family: Arial, sans-serif;
   margin: 0;
   background: var(--bg);
-  overflow-x: hidden; /* remove horizontal scroll on body also */
+  overflow-x: clip; /* remove horizontal scroll without breaking sticky navbar */
   width: 100%;
 }
 button{
@@ -1666,5 +1666,50 @@ font-size: 18px;
 @media (min-width: 768px) {
   .logo-name {
     display: inline-block; /* or block, depending on your layout */
+  }
+}
+
+/* --- mobile cart model --- */
+@media (max-width: 768px) {
+  .cart-drawer {
+    /* Center the modal on the screen */
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 92%;
+    height: auto;
+    max-height: 85vh; /* Prevents it from touching the absolute top/bottom */
+    
+    /* Give it rounded corners like a popup */
+    border-radius: 16px;
+    
+    /* Override the slide-in animation with a pop-up animation */
+    animation: modalPopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  }
+
+  /* Make sure the header and footer respect the rounded corners */
+  .cart-drawer-header {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+  
+  .cart-drawer-footer {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    /* Reset the safe-area inset we added earlier since it's no longer pinned to the bottom */
+    padding-bottom: 20px !important; 
+  }
+}
+
+/* Keyframes for the modal pop-up effect */
+@keyframes modalPopIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.85); /* Start slightly lower and smaller */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1); /* End perfectly centered */
   }
 }
