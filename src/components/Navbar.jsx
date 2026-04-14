@@ -625,9 +625,10 @@ export default function Navbar() {
 
           /* Move Desktop inline styles here */
           .nav-logo-img {
-            height: 140px;
-            width: 140px;
-            margin: -30px 0;
+            height: 75px;
+            width: 75px;
+            margin: 0;
+            transform: scale(1.5);
             object-fit: contain;
           }
 
@@ -665,9 +666,10 @@ export default function Navbar() {
 
             /* Now the CSS can successfully shrink the logo! */
             .nav-logo-img {
-              height: 60px !important;
-              width: 60px !important;
+              height: 55px !important;  
+              width: 55px !important;
               margin: 0 !important;
+              transform: scale(1.4) !important;
             }
 
             .nav-logo-text {
@@ -681,10 +683,11 @@ export default function Navbar() {
             .mobile-menu-toggle {
               display: block !important;
               margin-left: 10px;
+              font-size: 28px !important;
             }
 
             .nav-links {
-              width: 100%;
+              width: 100%  ;
               position: absolute;
               top: 100%;
               left: 0;
@@ -741,11 +744,13 @@ export default function Navbar() {
 
           @media (max-width: 400px) {
             .nav-logo-img {
-              height: 50px !important;
-              width: 50px !important;
+              height: 45px !important;
+              width: 45px !important;
+              margin: 0 !important;
+              transform: scale(1.3) !important;
             }
             .nav-logo-text {
-              font-size: 16px !important;
+              font-size: 18px !important;
             }
             .nav-right, .nav-actions {
               gap: 8px !important;
