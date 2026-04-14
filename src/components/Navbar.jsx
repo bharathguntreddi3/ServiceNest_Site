@@ -416,7 +416,7 @@ export default function Navbar() {
           <div className="logo">
             <Link to="/" className="brand-link">
               <img src={logo} alt="logo" className="nav-logo-img" />
-              <span className="nav-logo-text">ServiceNest</span>
+              <span className="logo-name hidden md:block">ServiceNest</span>
             </Link>
           </div>
 
@@ -657,6 +657,9 @@ export default function Navbar() {
           /* Mobile adjustments */
           @media (max-width: 768px) {
             .navbar-inner {
+              flex-direction: row !important;
+              justify-content: space-between !important;
+              align-items: center !important;
               flex-wrap: wrap !important;
             }
 
@@ -681,20 +684,54 @@ export default function Navbar() {
             }
 
             .nav-links {
-              display: none !important;
               width: 100%;
-              flex-direction: column;
-              background: rgba(11, 60, 112, 0.95);
-              padding: 15px;
-              border-radius: 8px;
-              margin-top: 15px;
-              order: 3;
-              gap: 15px;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background: rgba(11, 60, 112, 0.98);
+              flex-direction: column !important;
+              padding: 0;
+              margin: 0;
+              gap: 0 !important;
+              box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+              
+              /* Smooth dropdown animation */
+              opacity: 0;
+              visibility: hidden;
+              transform: translateY(-15px);
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              z-index: 999;
+              border-bottom-left-radius: 16px;
+              border-bottom-right-radius: 16px;
               text-align: center;
             }
 
             .nav-links.mobile-active {
-              display: flex !important;
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(0);
+            }
+            
+            .nav-links a {
+              padding: 18px 20px;
+              margin: 0 !important;
+              width: 100%;
+              display: block;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+              transition: background 0.3s;
+            }
+            
+            .nav-links a:hover {
+              background: rgba(255, 255, 255, 0.05);
+            }
+            
+            .nav-links a:last-child {
+              border-bottom: none;
+            }
+            
+            .nav-links a::after {
+              display: none; /* Hide hover underline effect on mobile */
             }
             
             .nav-right, .nav-actions {

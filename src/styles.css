@@ -1,3 +1,5 @@
+/* @import "tailwindcss"; */
+
 :root{
   --primary:#1e6bb8;
   --secondary:#ff7a00;
@@ -1012,20 +1014,16 @@ font-size: 18px;
 
 @media (max-width: 768px) {
   .navbar-inner {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .nav-links {
-    gap: 15px;
+    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .nav-actions {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+    width: auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
   }
 
   .categories, .services, .stats, .cart-page {
@@ -1648,4 +1646,14 @@ font-size: 18px;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.logo-name {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .logo-name {
+    display: inline-block; /* or block, depending on your layout */
+  }
 }

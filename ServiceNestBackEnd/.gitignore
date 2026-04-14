@@ -49,3 +49,6 @@ coverage
 
 # firebase config json 
 servicenest_token.json
+
+# firebase rules
+firebase-rules.json
