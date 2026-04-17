@@ -9,29 +9,31 @@ import {
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { lazy } from "react";
-import {Suspense} from "react";
+import { Suspense } from "react";
 
 // Initial user loading components - loaded immediately when application is opened
 import Landing from "./pages/Landing";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+//Vercel web analytics
+import { Analytics } from "@vercel/analytics/react";
+
 //  These components to be loaded when their specific routes are accessed
-const HomeSearch = lazy(()=> import("./pages/HomeSearch"));
-const CategoryPage = lazy(()=>import("./pages/CategoryPage"));
-const Cart = lazy(()=>import("./pages/Cart"));
-const Schedule = lazy(()=>import("./pages/Schedule"));
-const Payment = lazy(()=>import("./pages/Payment"));
-const Login = lazy(()=>import("./pages/Login"));
-const Register = lazy(()=>import("./pages/Register"));
-const ForgotPassword = lazy(()=>import("./pages/ForgotPassword"));
-const NotFound = lazy(()=>import("./pages/NotFound"));
+const HomeSearch = lazy(() => import("./pages/HomeSearch"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Schedule = lazy(() => import("./pages/Schedule"));
+const Payment = lazy(() => import("./pages/Payment"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-const AdminLogin = lazy(()=>import("./pages/AdminLogin"));
-const AdminDashboard = lazy(()=>import("./admin/AdminDashboard"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("./admin/AdminDashboard"));
 
-const ProviderDashboard = lazy(()=>import("./provider/ProviderDashboard"));
-
+const ProviderDashboard = lazy(() => import("./provider/ProviderDashboard"));
 
 // Utility component to handle scrolling to top and refreshing AOS animations on route change
 function ScrollAndAOS() {
@@ -61,7 +63,7 @@ function MainLayout() {
 }
 
 // Loading.. shows when any routes takes too long to load/download
-const PageLoader = () =>(
+const PageLoader = () => (
   <div className="loader-container">
     <div className="simple-spinner" aria-label="Loading..."></div>
   </div>
@@ -77,6 +79,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Analytics />
       <ScrollAndAOS />
       <Toaster
         position="bottom-center"
