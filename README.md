@@ -250,7 +250,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-<img src="public/logo.png" alt="ServiceNest" width="100"/>
+<img src="/src/assets/logo.png" alt="ServiceNest" width="100"/>
 
 <br/>
 
@@ -268,7 +268,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d2600,50:1a1a0a,100:0a0a0a&height=130&section=footer&animation=fadeIn" width="100%"/>
 
-<img src="public/logo.png" alt="ServiceNest" width="70"/>
+<img src="/src/assets/logo.png" alt="ServiceNest" width="70"/>
 
 <br/>
 
